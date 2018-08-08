@@ -14,19 +14,6 @@
             </v-list-tile>
           </v-list>
         </v-layout>
-
-        <!-- <v-dialog v-model="dialog" persistent max-width="290">
-          <v-btn slot="activator" color="primary" dark>Open Dialog</v-btn>
-          <v-card>
-            <v-card-title class="headline">Use Google's location service?</v-card-title>
-            <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="green darken-1" flat @click.native="dialog = false">Disagree</v-btn>
-              <v-btn color="green darken-1" flat @click.native="dialog = false">Agree</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog> -->
       </v-slide-y-transition>
     </v-container>
 
@@ -44,15 +31,37 @@
         <v-icon v-if="!fab">toc</v-icon>
         <v-icon v-if="fab">close</v-icon>
       </v-btn>
-      <v-btn fab dark small color="green">
+
+      <!-- <v-btn fab dark small color="green">
         <v-icon>edit</v-icon>
-      </v-btn>
+      </v-btn> -->
+
       <v-btn fab dark small color="indigo">
-        <v-icon>add</v-icon>
+        <!-- <v-icon>add</v-icon> -->
+        <v-layout row justify-center>
+        <v-dialog v-model="dialog" persistent max-width="400">
+          <v-icon slot="activator">add</v-icon>
+          <v-card>
+            <v-card-title class="headline">Add Todo Item</v-card-title>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs12><v-text-field label="Title"></v-text-field></v-flex>
+              </v-layout>
+            </v-container>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="red darken-1" flat @click.native="dialog = false">Cancel</v-btn>
+              <v-btn color="green darken-1" flat @click.native="dialog = false">Add</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        </v-layout>
       </v-btn>
+
       <v-btn fab dark small color="red">
         <v-icon>delete</v-icon>
       </v-btn>
+      
     </v-speed-dial>
   </v-card>
 </template>
@@ -69,8 +78,13 @@ export default {
         {
           title: 'todo2',
           checked: false
+        },
+        {
+          title: 'todo3',
+          checked: true
         }
       ],
+      // *** Float Button ***
       direction: 'top',
       fab: false,
       fling: false,
@@ -80,7 +94,9 @@ export default {
       right: true,
       bottom: true,
       left: false,
-      transition: 'slide-y-reverse-transition'
+      transition: 'slide-y-reverse-transition',
+      // *** Dialog ***
+      dialog: false
     };
   },
   methods: {
