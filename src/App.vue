@@ -29,10 +29,6 @@
       <v-spacer></v-spacer>
 
       <v-btn icon>
-        <v-icon>search</v-icon>
-      </v-btn>
-
-      <v-btn icon>
         <v-icon>more_vert</v-icon>
       </v-btn>
     </v-toolbar>
@@ -49,16 +45,18 @@ export default {
   data () {
     return {
       clipped: false,
-      drawer: true,
+      drawer: false,
       fixed: false,
-      items: [{
-        icon: 'view_list',
-        title: 'List'
-      },
-      {
-        icon: 'lock',
-        title: 'Logout'
-      }],
+      items: [
+        {
+          icon: 'view_list',
+          title: 'List'
+        },
+        {
+          icon: 'lock',
+          title: 'Logout'
+        }
+        ],
       miniVariant: false,
       title: 'Todo List'
     }
