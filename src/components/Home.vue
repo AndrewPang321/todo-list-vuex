@@ -83,7 +83,7 @@
             </v-container>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="red darken-1" flat @click.native="deleteDialog = false">Cancel</v-btn>
+              <v-btn color="red darken-1" flat @click.native="deleteDialog = false" @click="cancelDeleteTodo">Cancel</v-btn>
               <v-btn color="green darken-1" flat @click.native="deleteDialog = false" @click="deleteTodo">Delete</v-btn>
             </v-card-actions>
           </v-card>
@@ -149,7 +149,12 @@ export default {
     },
     deleteTodo() {
       this.todos = this.todos.filter(item => {
-        return item.delete == false
+        return item.delete == false;
+      });
+    },
+    cancelDeleteTodo() {
+      this.todos.forEach(item => {
+        return item.delete = false;
       });
     }
   }
