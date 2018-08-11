@@ -53,7 +53,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="red darken-1" flat @click.native="addDialog = false">Cancel</v-btn>
-              <v-btn color="green darken-1" flat @click.native="addDialog = false" @click="addTodo">Add</v-btn>
+              <v-btn color="green darken-1" flat @click.native="addDialog = false" @click="addTodo(newTodoTitle)">Add</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -95,26 +95,11 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   data() {
     return {
-      todos: [
-        {
-          title: 'todo1',
-          checked: true,
-          delete: false
-        },
-        {
-          title: 'todo2',
-          checked: false,
-          delete: false
-        },
-        {
-          title: 'todo3',
-          checked: true,
-          delete: false
-        }
-      ],
       // *** Float Button ***
       direction: 'top',
       fab: false,
@@ -134,29 +119,10 @@ export default {
     };
   },
   methods: {
-    checkTodo(item) {
-      item.checked = !item.checked;
-    },
-    addTodo() {
-      this.todos.push({
-        title: this.newTodoTitle,
-        checked: false,
-        delete: false
-      });
-    },
-    checkDeleteTodo(item) {
-      item.delete = !item.delete;
-    },
-    deleteTodo() {
-      this.todos = this.todos.filter(item => {
-        return item.delete == false;
-      });
-    },
-    cancelDeleteTodo() {
-      this.todos.forEach(item => {
-        return item.delete = false;
-      });
-    }
+    ...mapActions(['checkTodo', 'addTodo', 'checkDeleteTodo', 'deleteTodo', 'cancelDeleteTodo'])
+  },
+  computed: {
+    ...mapGetters(['todos'])
   }
 }
 </script>
