@@ -73,7 +73,7 @@ export default new Vuex.Store({
       try {
         commit('cancelDeleteTodo');
       } catch (error) {
-        
+
       }
     }
   },

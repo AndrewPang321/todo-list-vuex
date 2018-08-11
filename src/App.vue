@@ -10,12 +10,12 @@
       app>
 
       <v-list>
-        <v-list-tile value="true" v-for="(item, i) in items" :key="i">
+        <v-list-tile value="true" v-for="(page, i) in pages" :key="i" :to="page.pathName">
           <v-list-tile-action>
-            <v-icon v-html="item.icon"></v-icon>
+            <v-icon v-html="page.icon"></v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title v-text="item.title"></v-list-tile-title>
+            <v-list-tile-title v-text="page.title"></v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -47,14 +47,16 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
-      items: [
+      pages: [
         {
           icon: 'view_list',
-          title: 'List'
+          title: 'List',
+          pathName: '/'
         },
         {
           icon: 'lock',
-          title: 'Logout'
+          title: 'Logout',
+          pathName: '/login'
         }
         ],
       miniVariant: false,
