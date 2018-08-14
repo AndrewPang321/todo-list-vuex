@@ -53,7 +53,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="red darken-1" flat @click.native="addDialog = false">Cancel</v-btn>
-              <v-btn color="green darken-1" flat @click.native="addDialog = false" @click="addTodo(newTodoTitle)">Add</v-btn>
+              <v-btn color="green darken-1" flat @click.native="addDialog = false" @click="addTodo(newTodoTitle); newTodoTitle=''">Add</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -72,7 +72,7 @@
                 <v-list class="deleteTodoContainer">
                   <v-list-tile v-for="(item, i) in todos" :key="i" @click.stop="checkDeleteTodo(item)">
                       <v-list-tile-action>
-                        <v-checkbox v-model="item.delete" color="primary"></v-checkbox>
+                        <v-checkbox v-model="item.deleted" color="primary"></v-checkbox>
                       </v-list-tile-action>
                       <v-list-tile-content>
                         {{item.title}}
@@ -118,8 +118,18 @@ export default {
       deleteDialog: false,
     };
   },
+  async created() {
+    await this.getTodo();
+  },
   methods: {
-    ...mapActions(['checkTodo', 'addTodo', 'checkDeleteTodo', 'deleteTodo', 'cancelDeleteTodo'])
+    ...mapActions([
+      'getTodo',
+      'checkTodo',
+      'addTodo',
+      'checkDeleteTodo',
+      'deleteTodo',
+      'cancelDeleteTodo'
+    ])
   },
   computed: {
     ...mapGetters(['todos'])
