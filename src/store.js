@@ -6,9 +6,16 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    user: '',
     todos: []
   },
   mutations: {
+    login(state, user) {
+      state.user = user.uid;
+    },
+    logout(state) {
+      state.user = '';
+    },
     getTodo(state, { list }) {
       if (list === null) {
         state.todos = [];
@@ -40,6 +47,22 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    async login({ commit }, { email, password }) {
+      try {
+        const user = await api.authenticate(email, password);
+        commit('login', user);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async logout({ commit }) {
+      try {
+        await api.deauthenticate();
+        commit('logout');
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async getTodo({ commit }) {
       try {
         commit('getTodo', {
@@ -100,6 +123,7 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    userId: state => state.user,
     todos: state => state.todos
   }
 })

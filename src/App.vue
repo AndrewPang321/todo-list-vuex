@@ -10,7 +10,7 @@
       app>
 
       <v-list>
-        <v-list-tile value="true" v-for="(page, i) in pages" :key="i" :to="page.pathName">
+        <v-list-tile value="true" v-for="(page, i) in pages" :key="i" @click="redirect(page.title)">
           <v-list-tile-action>
             <v-icon v-html="page.icon"></v-icon>
           </v-list-tile-action>
@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+import { auth } from '@/api/firebase';
 
 export default {
   name: 'App',
@@ -60,8 +62,40 @@ export default {
         }
         ],
       miniVariant: false,
-      title: 'Todo List'
+      title: 'Todo List',
+      testing: '',
     }
+  },
+  methods: {
+    ...mapActions(['logout']),
+    redirect(pageTitle) {
+      switch (pageTitle) {
+        case 'List':
+          // console.log(this.userAuth());
+          if (this.authenticated) {
+            this.$router.push('/');
+          }
+          break;
+        case 'Logout':
+          this.logout();
+          break;
+      }
+    },
+    userAuthNavHandler() {
+      auth.onAuthStateChanged(user => {
+        if (user) {
+          this.pages[1].title = 'Logout';
+        } else {
+          this.pages[1].title = 'Login';
+        }
+      });
+    }
+  },
+  computed: {
+    ...mapGetters(['userId']),
+  },
+  mounted() {
+    this.userAuthNavHandler();
   }
 }
 </script>
