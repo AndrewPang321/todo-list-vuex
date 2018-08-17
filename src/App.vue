@@ -67,7 +67,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['logout']),
+    ...mapActions(['logout', 'saveUserId']),
     redirect(pageTitle) {
       switch (pageTitle) {
         case 'List':
@@ -84,8 +84,10 @@ export default {
     userAuthNavHandler() {
       auth.onAuthStateChanged(user => {
         if (user) {
+          this.saveUserId(user.uid);
           this.pages[1].title = 'Logout';
         } else {
+          this.saveUserId('');
           this.pages[1].title = 'Login';
         }
       });

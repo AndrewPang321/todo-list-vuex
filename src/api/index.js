@@ -17,8 +17,8 @@ export const deauthenticate = async () => {
   }
 }
 
-export const list = async (action, payload) => {
-  const list = db.ref('list');
+export const list = async (action, uid, payload) => {
+  const list = db.ref(`list/${uid}`);
   try {
     switch (action) {
       case 'get': {

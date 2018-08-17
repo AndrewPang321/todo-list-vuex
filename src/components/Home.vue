@@ -52,7 +52,7 @@
             </v-container>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="red darken-1" flat @click.native="addDialog = false">Cancel</v-btn>
+              <v-btn color="red darken-1" flat @click.native="addDialog = false" @click="newTodoTitle=''">Cancel</v-btn>
               <v-btn color="green darken-1" flat @click.native="addDialog = false" @click="addTodo(newTodoTitle); newTodoTitle=''">Add</v-btn>
             </v-card-actions>
           </v-card>

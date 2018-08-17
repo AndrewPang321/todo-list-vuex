@@ -6,15 +6,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: '',
+    userId: '',
     todos: []
   },
   mutations: {
-    login(state, user) {
-      state.user = user.uid;
+    saveUserId(state, userId) {
+      state.userId = userId;
     },
     logout(state) {
-      state.user = '';
+      state.userId = '';
     },
     getTodo(state, { list }) {
       if (list === null) {
@@ -49,8 +49,7 @@ export default new Vuex.Store({
   actions: {
     async login({ commit }, { email, password }) {
       try {
-        const user = await api.authenticate(email, password);
-        commit('login', user);
+        await api.authenticate(email, password);
       } catch (error) {
         console.log(error);
       }
@@ -66,7 +65,7 @@ export default new Vuex.Store({
     async getTodo({ commit }) {
       try {
         commit('getTodo', {
-          list: await api.list('get')
+          list: await api.list('get', this.state.userId)
         });
       } catch (error) {
         console.log(error);
@@ -81,7 +80,7 @@ export default new Vuex.Store({
         commit('addTodo', {
           value: {
             ...newTodo,
-            id: await api.list('add', newTodo),
+            id: await api.list('add', this.state.userId, newTodo),
             deleted: false
           }
         });
@@ -92,7 +91,7 @@ export default new Vuex.Store({
     async checkTodo({ commit }, todoItem) {
       try {
         todoItem.checked = !todoItem.checked;
-        await api.list('update', {
+        await api.list('update', this.state.userId, {
           id: todoItem.id,
           content: {
             title: todoItem.title,
@@ -109,7 +108,7 @@ export default new Vuex.Store({
           return item.deleted == true;
         });
         toBeDeleted = toBeDeleted.map(item => item.id);
-        await api.list('delete', { trash: toBeDeleted });
+        await api.list('delete', this.state.userId, { trash: toBeDeleted });
         commit('deleteTodo');
       } catch (error) {
         console.log(error);
@@ -120,10 +119,12 @@ export default new Vuex.Store({
     },
     cancelDeleteTodo({ commit }) {
       commit('cancelDeleteTodo');
+    },
+    saveUserId({ commit }, uid) {
+      commit('saveUserId', uid);
     }
   },
   getters: {
-    userId: state => state.user,
     todos: state => state.todos
   }
 })
