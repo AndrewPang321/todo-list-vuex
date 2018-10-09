@@ -5,6 +5,7 @@ A simple todo list application to practise the use of Vue and Vuex.
 - Google Firebase
 - Vue
 - Vue x
+- [Vuetify.js](https://vuetifyjs.com/en/)
 
 ## Project setup
 ```
