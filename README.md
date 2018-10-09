@@ -3,7 +3,7 @@ A simple todo list application to practise the use of Vue and Vuex.
 
 ## Frameworks
 - Google Firebase
-- Vue
+- Vue.js
 - Vue x
 - [Vuetify.js](https://vuetifyjs.com/en/)
 
